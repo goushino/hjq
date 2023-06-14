@@ -1,2 +1,2 @@
 # hjq
-Tutorial Project at June 9, 2023
+Tutorial Project on June 9, 2023
