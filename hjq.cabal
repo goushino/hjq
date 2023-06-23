@@ -74,7 +74,12 @@ library
     -- Other library packages from which modules are imported.
     build-depends:    base ^>=4.16.4.0,
                       text,
-                      attoparsec
+                      attoparsec,
+                      vector,
+                      unordered-containers,
+                      aeson,
+                      lens-aeson,
+                      lens
 
     -- Directories containing source files.
     hs-source-dirs:   src
@@ -134,4 +139,9 @@ test-suite hjq-test
         base ^>=4.16.4.0,
         hjq,
         HUnit,
-        text
+        text,
+        vector,
+        unordered-containers,
+        aeson,
+        lens-aeson,
+        lens
