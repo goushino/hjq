@@ -18,6 +18,7 @@ main = do
     , jqQueryParserTest
     , jqQueryParserSpacesTest
     , applyFilterTest
+    , executeQueryTest
     ]
   return ()
 
@@ -69,6 +70,15 @@ applyFilterTest = TestList
       ~?= fmap Right (testData ^? key "array-field" . nth 2 . key "object-in-array")
   ]
 
+executeQueryTest :: Test
+executeQueryTest = TestList
+  [ "executeQuery test 1" ~: executeQuery (unsafeParseQuery "{}") testData ~?= Right (Object $ fromList [])
+  , "executeQuery test 2" ~: executeQuery (unsafeParseQuery "{\"field1\": . , \"field2\": .string-field }") testData
+      ~?= Right (Object $ fromList [("field1", testData), ("field2", String "string value")])
+  , "executeQuery test 3" ~: executeQuery (unsafeParseQuery "[ .string-field, .nested-field.inner-string ]") testData
+      ~?= Right (Array $ V.fromList [String "string value", String "inner value"])
+  ]
+
 ------
 
 testData :: Value
@@ -93,3 +103,8 @@ unsafeParseFilter :: Text -> JqFilter
 unsafeParseFilter t = case parseJqFilter t of
   Right f -> f
   Left s -> error $ "PARSEFAILURE IN A TEST:" ++ unpack s
+
+unsafeParseQuery :: Text -> JqQuery
+unsafeParseQuery t = case parseJqQuery t of
+  Right q -> q
+  Left s -> error $ "PARSE FAILURE IN A TEST : " ++ unpack s
