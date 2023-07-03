@@ -79,7 +79,10 @@ library
                       unordered-containers,
                       aeson,
                       lens-aeson,
-                      lens
+                      lens,
+                      aeson-pretty,
+                      bytestring,
+                      errors
 
     -- Directories containing source files.
     hs-source-dirs:   src
@@ -104,7 +107,8 @@ executable hjq
     build-depends:
         base ^>=4.16.4.0,
         hjq,
-        text
+        text,
+        bytestring
 
     -- Directories containing source files.
     hs-source-dirs:   app
